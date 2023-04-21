@@ -1,0 +1,14 @@
+{
+    "Alk_Articals": {
+        "column": {
+            "id": true,
+            "reference_id": true,
+            "title": true,
+            "description": true,
+            "time": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

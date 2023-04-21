@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Created By : Alkesh Rohit
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="Alk_Articals" resource="default" engine="innodb" comment="created table Alk_Articls using db schema">
+        <column xsi:type="smallint" name="id" padding="6" unsigned="false" nullable="false" identity="true" comment="ID" />
+        <column xsi:type="int" name="reference_id" padding="10" unsigned="true" nullable="false" comment="Reference Id"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+<!--        <column xsi:type="varchar" name="author_name" nullable="false" length="25" comment="Name" />-->
+<!--        <column xsi:type="varchar" name="email" nullable="false" length="25" comment="Email" />-->
+        <column xsi:type="varchar" name="description" nullable="false" length="255" comment="Descrition" />
+        <column xsi:type="timestamp" name="time" comment="Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+    </table>
+</schema>
