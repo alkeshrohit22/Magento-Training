@@ -11,8 +11,8 @@ class Training extends Template
 
     public function __construct(
         Template\Context $context,
-        array $data = [],
-        Collection $collection
+        Collection $collection,
+        array $data = []
     )
     {
         $this->collection = $collection;
