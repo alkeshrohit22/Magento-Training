@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="product_a_plugin" type="Alkesh7\Assignment3\Plugin\ProductAPlugin" sortOrder="10"/>
+        <plugin name="product_b_plugin" type="Alkesh7\Assignment3\Plugin\ProductBPlugin" sortOrder="20"/>
+        <plugin name="product_c_plugin" type="Alkesh7\Assignment3\Plugin\ProductCPlugin" sortOrder="30"/>
+    </type>
+</config>
