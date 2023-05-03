@@ -40,55 +40,57 @@ class Triggeremail implements ObserverInterfaceAlias
 
     public function execute(Observer $observer)
     {
+
+//        $writer2 = new \Zend_Log_Writer_Stream(BP . '/var/log/testlog1.log');
+//        $logger = new \Zend_Log();
+//        $logger->addWriter($writer2);
+//        $logger->info('Enter in execute');
+
         // getting all items from cart
         $Total_items = $observer->getCart()->getQuote()->getItemsCount();
 
         if ($Total_items > 5) { //checking condition
-            //$customer = $this->customerSession->getCustomer();
-
-
+//            $logger->info("Total items are" . $Total_items);
             $customerSessionData = $this->customerSession->getCustomer()->getData();
-            $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/testlog1.log');
-            $logger = new \Zend_Log();
-            $logger->addWriter($writer);
-//            $logger->info('Customer Session Data: ' . print_r($customerSessionData, true));
             $customerName = $customerSessionData['firstname'] . ' ' . $customerSessionData['lastname'];
             $customerEmail = $customerSessionData['email'];
-
-//            $logger->info('Name : ' . $customerName . " and " . $customerEmail);
-//            exit();
+//            $logger->info($customerName . " " . $customerEmail);
             $templateId = 'more_than_five_product_email_trigger_template';
             $templateVars = [
                 'customer_name' => $customerName,
                 'items_count' => $Total_items
             ];
-//            $logger->info('Called');
-//            $logger->info('Template id ' . print_r($templateVars, true));
-//            exit();
             $this->sendEmail($customerEmail, $customerName, $templateId, $templateVars);
         }
     }
 
-    //sending email
     protected function sendEmail($customerEmail, $customerName, $templateId, $templateVars)
     {
-//        $senderName = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-//        $writer2 = new \Zend_Log_Writer_Stream(BP . '/var/log/testlog.log');
-//        $logger = new \Zend_Log();
-//        $logger->addWriter($writer2);
-//        $logger->info('Called');
-//        $logger->info(print_r($senderName, true));
-//        exit();
+        $writer2 = new \Zend_Log_Writer_Stream(BP . '/var/log/testlog2.log');
+        $logger = new \Zend_Log();
+        $logger->addWriter($writer2);
+//        $logger->info('Enter in send email function');
+//        $logger->info($customerName . " " . $customerEmail);
+//        $logger->info("Template ID" . $templateId);
+//        $logger->info(print_r($templateVars));
+        $senderEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
+        $senderName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+        $logger->info("Sender details" . $senderName . " " . $senderEmail);
+        exit();
         try {
             $transport = $this->transportBuilder
                 ->setTemplateIdentifier($templateId)
                 ->setTemplateVars($templateVars)
-                ->setFrom($this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE))
+                ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $this->_storeManager->getStore()->getId()])
+                ->setFrom([
+                    'email' => $senderEmail,
+                    'name' => $senderName
+                ])
                 ->addTo($customerEmail, $customerName)
                 ->getTransport();
             $transport->sendMessage();
         } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage());
+            $this->logger->critical($e->getTraceAsString());
         }
     }
 }
