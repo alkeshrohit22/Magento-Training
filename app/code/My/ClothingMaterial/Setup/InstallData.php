@@ -58,7 +58,9 @@ class InstallData implements InstallDataInterface
                 'is_filterable_in_grid' => false,
                 'visible' => true,
                 'is_html_allowed_on_front' => true,
-                'visible_on_front' => true
+                'visible_on_front' => true,
+                'filterable' => true,
+                'filterable_in_search' => true
             ]
         );
     }
